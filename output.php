@@ -57,16 +57,16 @@ if (empty($_REQUEST['image'])) {
         } else {
             $flip_h = false;
         }
-        
+
         if ($_REQUEST['flip_v']) {
             $flip_v = true;
         } else {
             $flip_v = false;
         }
-		
+
 		// 创建画布
         $ASCIIArtist->setImageFile();
-		
+
         // 设置CSS效果
         $ASCIIArtist->setImageCSS('
             color           : '.$_REQUEST['color'].';
@@ -76,15 +76,15 @@ if (empty($_REQUEST['image'])) {
             line-height     : '.$_REQUEST['line-height']."px;
             letter-spacing  : ".$_REQUEST['letter-spacing'].'px;
         ');
-        
-        // 使图像转换成HTML        
+
+        // 使图像转换成HTML
         $ASCIIArtist->renderHTMLImage($_REQUEST['mode'], $_REQUEST['resolution'], $_REQUEST['fixed_char'], $flip_h, $flip_v);
-		
+
 	$ASCIIArtist->renderpic();
-		
+
         // 输出HTML成像
         echo $ASCIIArtist->getHTMLImage();
-		
+
 		// 生成画布
         $new_pic = $ASCIIArtist->getImageFile($id);
         }
@@ -103,8 +103,8 @@ echo "<script>alert('已发送，快到你微博上看看！')</script>";
 <form action="" method="POST">
         <table width="400" border="0" cellpadding="1" cellspacing="1">
         <tr>
-                                
-                <td><textarea name="weibo" rows="3" cols="60" onpropertychange="if(this.scrollHeight>60) this.style.posHeight=this.scrollHeight+5">test<?php  $n=rand(2,4);for($i=1;$i<$n;$i++){ echo '!';} ?>!![嘻嘻] http://magicpic.sinaapp.com</textarea>
+
+                <td><textarea name="weibo" rows="3" cols="60" onpropertychange="if(this.scrollHeight>60) this.style.posHeight=this.scrollHeight+5">test<?php  $n=rand(2,4);for($i=1;$i<$n;$i++){ echo '!';} ?>!![嘻嘻] http://magicpic.season.im</textarea>
 		</td>
         </tr>
         <tr>

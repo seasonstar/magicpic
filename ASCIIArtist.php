@@ -4,9 +4,9 @@ class ASCIIArtist
 {
 
     var $_version = "1.4";
-    
+
     var $_errors = array();
-        
+
     var $_replaceCharacters = array (
         1 => "天",
         2 => "唐",
@@ -24,13 +24,13 @@ class ASCIIArtist
         3 => "png"
     );
     var $_image = 0;
-    
+
     var $_imageHeight = 0;
-    
+
     var $_imageWidth = 0;
-    
+
     var $_imageHTML = '';
-   
+
     var $_imageCSS = '
         color               : #000000;
         background-color    : #FFFFFF;
@@ -39,7 +39,7 @@ class ASCIIArtist
         line-height         : 5px;
         letter-spacing      : -1px;
     ';
-    
+
     var $_errorCSS = '
         text-align          : center;
         color               : #000000;
@@ -52,11 +52,11 @@ class ASCIIArtist
         margin              : 4px;
         padding             : 4px;
     ';
-    
+
     var $_lastRGB = array();
 
     var $_fontTagOpen = false;
-    
+
 	//返回十六进制颜色
     function _RGB2HEX($rgb)
     {
@@ -74,7 +74,7 @@ class ASCIIArtist
 	$char=$this->_replaceCharacters[$replaceCharacterNo];
 	$_SESSION[$p][$q] = $char;
     }
-                                
+
     function _renderPixel($mode, $x, $y, $fixedChar)
     {
         // RGB值
@@ -87,60 +87,60 @@ class ASCIIArtist
                 $replaceCharacterNo = round($brightness / 100) + 1;
                 if ($this->_lastRGB == $rgb) {
                     $this->_imageHTML .= $this->_replaceCharacters[$replaceCharacterNo];
-					
+
                 } else {
-                    
+
                     if ($this->_fontTagOpen) {
                         $this->_imageHTML .= "</font>";
                     }
-                    
+
                     $this->_imageHTML .= "<font color=\"#".$this->_RGB2HEX($rgb)."\">".$this->_replaceCharacters[$replaceCharacterNo];
                     $this->_fontTagOpen = true;
                 }
-				
+
                 break;
             case 3:
                 if ($this->_lastRGB == $rgb) {
                     $this->_imageHTML .= $fixedChar;
                 } else {
-                    
+
                     if ($this->_fontTagOpen) {
                         $this->_imageHTML .= "</font>";
                     }
-                    
+
                     $this->_imageHTML .= "<font color=\"#".$this->_RGB2HEX($rgb)."\">".$fixedChar;
                     $this->_fontTagOpen = true;
                 }
                 break;
 
         }
-        
+
         $this->_lastRGB = $rgb;
     }
-    
+
     function getVersion ()
     {
         return $this->_version;
     }
-    
-	
+
+
 	//定义输出字CSS格式
     function setImageCSS ($css)
     {
         $this->_imageCSS = $css;
     }
-    
+
 	//错误时输出的CSS格式
     function setErrorCSS ($css)
     {
         $this->_errorCSS = $css;
     }
-    
+
 	//转换图像成字体
     function renderHTMLImage($mode = 1, $resolution = 2, $fixedChar = 'W')
     {
         $this->_imageHTML = '';
-        
+
         if ($resolution < 1) {
             $resolution = 1;
         }
@@ -153,12 +153,12 @@ class ASCIIArtist
             $this->_imageHTML .= "<br>\n";
             }
     }
-	
+
 	//渲染出图像效果
 	function renderpic($mode = 1, $resolution = 2, $fixedChar = 'W')
 	{
-	    $font = "jkt.ttf";
-            $q = 0; 
+	    $font = "./jkt.ttf";
+            $q = 0;
             $p = 0;
 	    for ($y = 1,$h = 0; $y < 180,$h < 900; $y +=2,$h+=10)
             {
@@ -172,7 +172,7 @@ class ASCIIArtist
 		}
 	    }
 	}
- 
+
 	//输出ASCII格式图像
     function getHTMLImage()
     {
@@ -184,7 +184,7 @@ class ASCIIArtist
                 .$this->_imageHTML
                 .'</span>';
     }
-    
+
 
 	//创建图像文件
     function setFile($filename)
@@ -193,7 +193,7 @@ class ASCIIArtist
             $this->_errors[] = 'Cannot open "'.$filename.'" for reading.';
             return false;
         }
-        
+
 	//储存图像数据
         list($width,$height,$type) = $imagesize;
         switch ($type) {
@@ -201,36 +201,36 @@ class ASCIIArtist
             case 2:
             case 3:
                 $imagefunction = "imagecreatefrom".$this->_imageTypes[$type];
-                
+
                 if (!function_exists($imagefunction) || !$this->_image = $imagefunction($filename)) {
                     $this->_errors[] = 'Unable to create images from '.$this->_imageTypes[$type].'. See http://de.php.net/manual/en/ref.image.php for more info.';
                     return false;
                 }
-                
+
                 $this->_imageHeight = $height;
                 $this->_imageWidth  = $width;
-                
+
                 break;
             default:
                 $this->_errors[] = 'Cannot determine image type of "'.$filename.'".';
                 return false;
         }
-        
+
         return true;
     }
-    
+
 	//返回图像高度
     function getImageHeight()
     {
         return $this->_imageHeight;
     }
-    
+
 	//返回图像宽度
     function getImageWidth()
     {
         return $this->_imageWidth;
     }
-    
+
     function setImageFile()
 	{
 		$_SESSION[magic]= imagecreatetruecolor(900, 900);

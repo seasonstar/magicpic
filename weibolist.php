@@ -20,8 +20,8 @@ $msg = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
 
 <body>
 <div>
-        <img src="<?echo $msg['avatar_large'] ?>" >
-        <h2>Hi，<?=$msg['screen_name']?> <br>试试你的头像会变成什么?</h2> 
+        <img src="<?php echo $msg['avatar_large'] ?>" >
+        <h2>Hi，<?=$msg['screen_name']?> <br>试试你的头像会变成什么?</h2>
 	<form action="output.php" method="POST">
         <table width="400" border="1" cellpadding="1" cellspacing="1">
 		<table>
@@ -59,11 +59,17 @@ $msg = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
 			<td>
 				<input type="text" size="2" maxlength="1" name="ch9" value="像">
 			</td>
+			<td>
+				<input type="hidden" name="flip_h" value="true">
+			</td>
+			<td>
+				<input type="hidden" name="flip_v" value="true">
+			</td>
 		</tr>
 		</table>
         <tr>
-                                
-                <td><textarea name="weibo" rows="3" cols="60" onpropertychange="if(this.scrollHeight>60) this.style.posHeight=this.scrollHeight+5">这字体拼图有点意思<?php  $n=rand(2,4);for($i=1;$i<$n;$i++){ echo '!';} ?>!![嘻嘻] http://magicpic.sinaapp.com</textarea>
+
+                <td><textarea name="weibo" rows="3" cols="60" onpropertychange="if(this.scrollHeight>60) this.style.posHeight=this.scrollHeight+5">这字体拼图有点意思<?php  $n=rand(2,4);for($i=1;$i<$n;$i++){ echo '!';} ?>!![嘻嘻] http://magicpic.season.im</textarea>
 		</td>
         </tr>
 		<tr><br>
@@ -71,7 +77,7 @@ $msg = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
                         	<input class="inputsubmit" type="Submit"  value=" 生成字体拼图 ">
                         </td>
 			<td>
-                          <input type="hidden" name="image" value="<?echo $msg['avatar_large'] ?>">
+                          <input type="hidden" name="image" value="<?php echo $msg['avatar_large'] ?>">
                         </td>
                         <td>
                             	<input type="hidden" name="resolution" value="3">
